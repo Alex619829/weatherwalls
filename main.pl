@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use utf8;
-use lib '.';
+use lib '/usr/local/bin/weatherwalls';
 use Services::weather;
 use Services::sun;
 use Services::dict;

@@ -2,6 +2,7 @@
 Description=weatherwalls
 
 [Service]
+User=default
 ExecStart=/usr/bin/perl /usr/local/bin/weatherwalls/main.pl
 Restart=always
 
