@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use utf8;
 use lib '.';
 use Services::weather;
 use Services::sun;
@@ -12,18 +13,15 @@ while (1) {
 
     my $weather = Services::weather::weather_check();
     my $time_of_day = Services::sun::time_of_day(Services::weather::get_coords());
-    print(lc($weather));
+
     foreach my $key (Services::dict::return_keys()) {
         
-        if (index($weather, $key) != -1) {
-
-            print("gsettings set org.gnome.desktop.background picture-uri ~/Perl_Projects/Weather/img/" .
-            Services::dict::get_word($key) . "_" . $time_of_day . ".jpg");
+        if (index(lc($weather), $key) != -1) {
             
-            system("gsettings set org.gnome.desktop.background picture-uri ~/Perl_Projects/Weather/img/" .
+            system("gsettings set org.gnome.desktop.background picture-uri /usr/local/bin/weatherwalls/img/" .
             Services::dict::get_word($key) . "_" . $time_of_day . ".jpg");
 
-            system("gsettings set org.gnome.desktop.background picture-uri-dark ~/Perl_Projects/Weather/img/" .
+            system("gsettings set org.gnome.desktop.background picture-uri-dark /usr/local/bin/weatherwalls/img/" .
             Services::dict::get_word($key) . "_" . $time_of_day . ".jpg");
 
         }
