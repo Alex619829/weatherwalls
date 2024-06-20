@@ -4,8 +4,11 @@ if test -d /usr/local/bin/weatherwalls_data; then
     rm /usr/local/bin/weatherwalls
 fi
 
+apt install build-essential -y
+apt install libdatetime-perl -y
 cpan File::chdir
 cpan WWW::ipinfo
+cpan DateTime::Event::Sunrise
 
 mkdir /usr/local/bin/weatherwalls_data
 cp -r * /usr/local/bin/weatherwalls_data
