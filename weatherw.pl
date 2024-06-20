@@ -2,10 +2,12 @@
 use strict;
 use warnings;
 use utf8;
-use lib '/usr/local/bin/weatherwalls';
+use lib '/usr/local/bin/weatherwalls_data';
 use Services::weather;
 use Services::sun;
 use Services::dict;
+
+#print join("\n", map { s|/|::|g; s|\.pm$||; $_ } keys %INC);
 
 
 $| = 1;
@@ -18,10 +20,10 @@ while (1) {
         
         if (index(lc($weather), $key) != -1) {
             
-            system("gsettings set org.gnome.desktop.background picture-uri /usr/local/bin/weatherwalls/img/" .
+            system("gsettings set org.gnome.desktop.background picture-uri /usr/local/bin/weatherwalls_data/img/" .
             Services::dict::get_word($key) . "_" . $time_of_day . ".jpg");
 
-            system("gsettings set org.gnome.desktop.background picture-uri-dark /usr/local/bin/weatherwalls/img/" .
+            system("gsettings set org.gnome.desktop.background picture-uri-dark /usr/local/bin/weatherwalls_data/img/" .
             Services::dict::get_word($key) . "_" . $time_of_day . ".jpg");
 
         }

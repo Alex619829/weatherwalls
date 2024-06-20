@@ -1,29 +1,20 @@
 #!/bin/bash
-if test -d /usr/local/bin/weatherwalls; then
-    rm -r /usr/local/bin/weatherwalls
+if test -d /usr/local/bin/weatherwalls_data; then
+    rm -r /usr/local/bin/weatherwalls_data
+    rm /usr/local/bin/weatherwalls
 fi
 
-mkdir /usr/local/bin/weatherwalls
-cp -r * /usr/local/bin/weatherwalls
-rm /usr/local/bin/weatherwalls/install.sh
+#cpan File::chdir
+#cpan WWW::ipinfo
 
-FILE="/etc/systemd/system/weatherwalls.service"
+mkdir /usr/local/bin/weatherwalls_data
+cp -r * /usr/local/bin/weatherwalls_data
+rm /usr/local/bin/weatherwalls_data/install.sh
 
-if [ -f "$FILE" ]; then
-    systemctl stop weatherwalls.service
-    rm "$FILE"
-    systemctl daemon-reload
+mv /usr/local/bin/weatherwalls_data/weatherwalls.pl /usr/local/bin/weatherwalls
 
-fi
+chmod +x /usr/local/bin/weatherwalls
 
+echo "Success: 'weatherwalls' installed to your computer"
 
-cp weatherwalls.service /etc/systemd/system/
-
-file="/etc/systemd/system/weatherwalls.service"
-old_string="User=default"
-new_string="User=$SUDO_USER"
-sed -i -e "s|$old_string|$new_string|g" $file
-
-systemctl daemon-reload
-systemctl start weatherwalls.service
-systemctl enable weatherwalls.service
+sudo -u $SUDO_USER bash autostart.sh on

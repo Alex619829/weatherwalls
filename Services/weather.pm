@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 package Services::weather;
 
-
 use strict;
 use warnings;
 use LWP::UserAgent;

@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 package Services::sun;
 
-
 use strict;
 use warnings;
 use DateTime;
@@ -14,21 +13,18 @@ sub time_of_day {
 
     my ($coords) = @_;
     my @coordsArray = split /,/, $coords, 2;
-    # Укажите координаты места
+
     my $latitude = $coordsArray[0];
     my $longitude = $coordsArray[1];
 
-    # Получаем текущую дату
     my $date = DateTime->now(time_zone => 'local');
 
-    # Создаем объект Sunrise для заданных координат
     my $sunrise = DateTime::Event::Sunrise->new(
         longitude => $longitude,
         latitude  => $latitude,
         altitude  => '-0.833',   # Алгоритм учитывает стандартную атмосферную рефракцию
     );
 
-    # Вычисляем время рассвета и заката
     my $sunrise_time_string = $sunrise->sunrise_datetime($date);
     my $sunset_time_string  = $sunrise->sunset_datetime($date);
 
