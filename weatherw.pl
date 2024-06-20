@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use utf8;
 use lib '/usr/local/bin/weatherwalls_data';
 use Services::weather;
 use Services::sun;
@@ -16,7 +15,7 @@ while (1) {
 
     foreach my $key (Services::dict::return_keys()) {
         
-        if (index(lc($weather), $key) != -1) {
+        if (index($weather, $key) != -1) {
             
             system("gsettings set org.gnome.desktop.background picture-uri /usr/local/bin/weatherwalls_data/img/" .
             Services::dict::get_word($key) . "_" . $time_of_day . ".jpg");
