@@ -7,8 +7,6 @@ use Services::weather;
 use Services::sun;
 use Services::dict;
 
-#print join("\n", map { s|/|::|g; s|\.pm$||; $_ } keys %INC);
-
 
 $| = 1;
 while (1) {
