@@ -4,8 +4,8 @@ if test -d /usr/local/bin/weatherwalls_data; then
     rm /usr/local/bin/weatherwalls
 fi
 
-#cpan File::chdir
-#cpan WWW::ipinfo
+cpan File::chdir
+cpan WWW::ipinfo
 
 mkdir /usr/local/bin/weatherwalls_data
 cp -r * /usr/local/bin/weatherwalls_data
