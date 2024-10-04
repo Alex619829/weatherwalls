@@ -4,6 +4,9 @@ if [ "$1" == "on" ]; then
     if test -f ~/.config/autostart/weatherwalls.desktop; then
         echo "App is already in autostart"
     else
+        if ! test -f ~/.config/autostart; then
+            mkdir ~/.config/autostart/
+        fi
         cp weatherwalls.desktop ~/.config/autostart/
         echo "Added to autostart"
     fi

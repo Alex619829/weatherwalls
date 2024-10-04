@@ -5,10 +5,11 @@ if test -d /usr/local/bin/weatherwalls_data; then
 fi
 
 apt-get install build-essential -y
-apt-get install libdatetime-perl -y
+cpan DateTime
 cpan File::chdir
 cpan WWW::ipinfo
 cpan DateTime::Event::Sunrise
+cpan HTML::TreeBuilder
 
 mkdir /usr/local/bin/weatherwalls_data
 cp -r * /usr/local/bin/weatherwalls_data
