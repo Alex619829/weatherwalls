@@ -6,25 +6,28 @@ use warnings;
 use LWP::UserAgent;
 use HTML::TreeBuilder;
 use WWW::ipinfo;
+use JSON;
+use Dotenv;
+Dotenv->load('/var/lib/weatherwalls/.env');
+use Env qw(OPENWEATHER_API_KEY);
 
 
 sub weather_check {
-
-    my $city = get_location() . "  погода";
+    my $city = get_location();
+    my $api_key = $OPENWEATHER_API_KEY;
+    my $url = "http://api.openweathermap.org/data/2.5/weather?q=$city&lang=ru&appid=$api_key&units=metric";
 
     my $ua = LWP::UserAgent->new;
-    $ua->agent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.952 YaBrowser/24.4.1.952 (beta) Yowser/2.5 Safari/537.36');
+    my $res = $ua->get($url);
 
-    my $res = $ua->get("https://www.google.com/search?q=$city&oq=$city&aqs=chrome.0.35i39l2j0l4j46j69i60.6128j1j7&sourceid=chrome&ie=UTF-8");
-
-    my $content = $res->content;
-    my $tree = HTML::TreeBuilder->new_from_content($content);
-
-    my $precipitation = $tree->look_down(_tag => 'span', id => 'wob_dc')->as_text;
-    $tree->delete;
-
-    return $precipitation;
-
+    if ($res->is_success) {
+        my $data = decode_json($res->decoded_content);
+        my $desc = $data->{weather}->[0]{description};
+        return $desc;
+    } else {
+        warn "Ошибка запроса погоды: " . $res->status_line;
+        return 'неизвестно';
+    }
 }
 
 

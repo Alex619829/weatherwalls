@@ -9,7 +9,7 @@ if ($signal eq "on") {
     my $pid = `pgrep -f weatherw.pl`;
 
     if ($pid eq '') {
-        chdir("/usr/local/bin/weatherwalls_data/");
+        chdir("/var/lib/weatherwalls");
         system("perl weatherw.pl &");
         print("OK\n");
     } else {

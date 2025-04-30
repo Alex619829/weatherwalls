@@ -3,6 +3,7 @@ package Services::dict;
 
 use strict;
 use warnings;
+use utf8;
 
 
 my %dictionary = (
@@ -12,6 +13,8 @@ my %dictionary = (
     'Ясно' => 'clear',
     'облачно' => 'cloudy',
     'Облачно' => 'cloudy',
+	'Пасмурно' => 'cloudy',
+	'пасмурно' => 'cloudy',
     'дождь' => 'rainy',
     'Дождь' => 'rainy',
     'морось' => 'rainy',
@@ -29,7 +32,14 @@ my %dictionary = (
 
 sub get_word {
     my ($word) = @_;
-    return $dictionary{$word};
+
+    foreach my $key (keys %dictionary) {
+        if (index(lc($word), lc($key)) != -1) {
+            return $dictionary{$key};
+        }
+    }
+
+    return 'unknown';
 }
 
 
