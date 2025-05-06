@@ -11,11 +11,7 @@ use Time::Local;
 
 sub time_of_day {
 
-    my ($coords) = @_;
-    my @coordsArray = split /,/, $coords, 2;
-
-    my $latitude = $coordsArray[0];
-    my $longitude = $coordsArray[1];
+	my ($latitude, $longitude) = @_;
 
     my $date = DateTime->now(time_zone => 'local');
 

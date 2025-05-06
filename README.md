@@ -26,10 +26,10 @@
 * Добавить программу в автозагрузку: 'bash /var/lib/weatherwalls/autostart.sh on'.
 * Удалить программу из автозагрузки: 'bash /var/lib/weatherwalls/autostart.sh off'.
 #  Использование
-* Перед использованием необходимо зарегистрироваться на `https://openweathermap.org` и получить бесплатный API ключ в личном кабинете.
+* Перед использованием необходимо зарегистрироваться получить бесплатный API ключ геолокатора в личном кабинете `https://yandex.com/maps-api/docs/locator/examples.html`.
 Далее необходимо в фале /var/lib/weatherwalls/.env указать Ваш API-ключ:
 ```
-OPENWEATHER_API_KEY="your_api_key"
+YANDEX_API_KEY="your_api_key"
 ``` 
 * Запустить программу - 'weatherwalls on'.
 * Выключить программу - 'weatherwalls off'.

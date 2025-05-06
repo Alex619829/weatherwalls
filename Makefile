@@ -6,7 +6,7 @@ EXEC=weatherwalls
 
 .PHONY: install uninstall deps
 
-install: deps
+install: deps 
 	@echo "Installing weatherwalls..."
 	rm -rf $(LIBDIR)
 	rm -f $(BINDIR)/$(EXEC)
