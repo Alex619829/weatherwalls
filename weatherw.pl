@@ -9,24 +9,47 @@ use Services::sun;
 use Services::dict;
 
 
+my $log_file = "$ENV{HOME}/weatherwalls.log";
+
+sub log_msg {
+    my ($msg) = @_;
+    open my $log_fh, '>>', $log_file or die "Cannot open log file: $!";
+    my $timestamp = localtime();
+    print $log_fh "[$timestamp] $msg\n";
+    close $log_fh;
+}
+
 $| = 1;
+log_msg("WeatherWalls daemon started.");
+
 while (1) {
+    eval {
+        log_msg("Starting iteration...");
 
-    my $weather = Services::weather::weather_check();
-    my $time_of_day = Services::sun::time_of_day(Services::weather::get_coords());
+        my $weather = Services::weather::weather_check();
+		my ($lat, $lon) = Services::weather::get_coords();
+		log_msg("Coordinates: lat=$lat, lon=$lon");
+		my $time_of_day = Services::sun::time_of_day($lat, $lon);
 
-    foreach my $key (Services::dict::return_keys()) {
-        
-        if (index($weather, $key) != -1) {
-            
-            system("gsettings set org.gnome.desktop.background picture-uri /var/lib/weatherwalls/img/" .
-            Services::dict::get_word($key) . "_" . $time_of_day . ".jpg");
+        log_msg("Weather: $weather");
+        log_msg("Time of day: $time_of_day");
 
-            system("gsettings set org.gnome.desktop.background picture-uri-dark /var/lib/weatherwalls/img/" .
-            Services::dict::get_word($key) . "_" . $time_of_day . ".jpg");
+        foreach my $key (Services::dict::return_keys()) {
+            if (index($weather, $key) != -1) {
+                my $image = Services::dict::get_word($key) . "_" . $time_of_day . ".jpg";
+                my $img_path = "/var/lib/weatherwalls/img/$image";
 
+                log_msg("Setting wallpaper to: $img_path");
+
+                system("gsettings set org.gnome.desktop.background picture-uri file://$img_path");
+                system("gsettings set org.gnome.desktop.background picture-uri-dark file://$img_path");
+            }
         }
 
+        log_msg("Iteration complete.");
+    };
+    if ($@) {
+        log_msg("Error occurred: $@");
     }
 
     sleep(60 * 5);
