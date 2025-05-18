@@ -6,22 +6,22 @@ EXEC=weatherwalls
 
 .PHONY: install uninstall deps
 
-#install: deps
-#	@echo "Installing weatherwalls..."
-#	rm -rf $(LIBDIR)
-#	rm -f $(BINDIR)/$(EXEC)
-#
-#	mkdir -p $(LIBDIR)
-#
-#	cp -r * $(LIBDIR)
-#	touch $(LIBDIR)/.env
-#
-#	mv $(LIBDIR)/$(SCRIPT) $(BINDIR)/$(EXEC)
-#	chmod +x $(BINDIR)/$(EXEC)
-#
-#	sudo -u $(SUDO_USER) bash $(LIBDIR)/autostart.sh on
-#
-#	@echo "✅ Установка завершена: 'weatherwalls' доступен как команда"
+install: deps
+	@echo "Installing weatherwalls..."
+	rm -rf $(LIBDIR)
+	rm -f $(BINDIR)/$(EXEC)
+
+	mkdir -p $(LIBDIR)
+
+	cp -r * $(LIBDIR)
+	touch $(LIBDIR)/.env
+
+	mv $(LIBDIR)/$(SCRIPT) $(BINDIR)/$(EXEC)
+	chmod +x $(BINDIR)/$(EXEC)
+
+	sudo -u $(SUDO_USER) bash $(LIBDIR)/autostart.sh on
+
+	@echo "✅ Установка завершена: 'weatherwalls' доступен как команда"
 
 deps:
 	@echo "Installing Perl dependencies..."

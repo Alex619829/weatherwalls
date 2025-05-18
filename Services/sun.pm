@@ -46,7 +46,7 @@ sub day_or_night_definition {
     
     if ($current_time >= $sunrise_time && $current_time <= $sunset_time) {
         return 'day';
-    } elsif ($current_time >= $sunset_time) {
+    } else {
         return 'night';
     }
 
