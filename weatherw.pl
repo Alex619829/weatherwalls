@@ -7,7 +7,9 @@ use lib '/var/lib/weatherwalls';
 use Services::weather;
 use Services::sun;
 use Services::dict;
+use Services::firefox;
 
+my $browser = $ARGV[0];
 my $log_file = "$ENV{HOME}/weatherwalls.log";
 
 sub log_msg {
@@ -50,6 +52,19 @@ while (1) {
 
             system("gsettings set org.gnome.desktop.background picture-uri file://$img_path");
             system("gsettings set org.gnome.desktop.background picture-uri-dark file://$img_path");
+
+            if (defined $browser && $browser eq 'firefox') {
+                log_msg("Firefox mode enabled. Attempting to update Firefox background...");
+                eval {
+                    Services::firefox::update_firefox_background($img_path);
+                    log_msg("Firefox background updated successfully.");
+                };
+                if ($@) {
+                    log_msg("Error updating Firefox background: $@");
+                }
+            } else {
+                log_msg("Firefox mode not enabled. Skipping Firefox background update.");
+            }
         }
 
         log_msg("Iteration complete.");
